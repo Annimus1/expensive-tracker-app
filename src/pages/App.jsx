@@ -1,9 +1,13 @@
-import Register from "./Register"
+import { Link } from "react-router";
 
 function App() {
 
   return (
-   <Register />
+   <div>
+    <Link to="/signin">Log in</Link>
+    <Link to="/signup">Register</Link>
+
+   </div>
   );
 }
 

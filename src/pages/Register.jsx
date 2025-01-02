@@ -1,4 +1,5 @@
 import GoogleButton from 'react-google-button'
+import { Link } from 'react-router';
 
 function Register() {
     return (
@@ -11,9 +12,9 @@ function Register() {
                         alt="log in image "
                         className='w-auto'
                     />
-                    <div>
+                    <div className='flex flex-col items-center'>
                         <h2 className='text-4xl font-serif font-bold'>Sign up</h2>
-                        <p className='text-gray-500'>Already have an account? <a className="text-blue-500" href="">sign in</a></p>
+                        <p className='text-gray-500'>Already have an account? <Link className="text-blue-500" to="/signin">sign in</Link></p>
                     </div>
 
                 </div>

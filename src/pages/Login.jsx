@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import '../index.css'
 import GoogleButton from 'react-google-button'
 
@@ -12,9 +13,9 @@ function Login() {
                     alt="log in image "
                     className='w-auto'
                 />
-                <div>
+                <div className='flex flex-col items-center'>
                     <h2 className='text-4xl font-serif font-bold'>Sign in</h2>
-                    <p className='text-gray-500'>No registered yet? <a className="text-blue-500" href="">sign up</a></p>
+                    <p className='text-gray-500'>No registered yet? <Link className="text-blue-500" to="/signup">sign up</Link></p>
                 </div>
 
             </div>
