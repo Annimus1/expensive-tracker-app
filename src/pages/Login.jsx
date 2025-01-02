@@ -42,7 +42,7 @@ function Login() {
                 <div className='flex flex-col items-center'>
                     <input 
                         type="submit" 
-                        value="Log in"  
+                        value="Sign in"  
                         className="px-20 py-2 rounded-sm bg-gradient-to-tr text-white font-bold to-[#153677] from-[#4e085f]  hover:cursor-pointer "
                     />
                     <a className="text-sm text-gray-500" href="">Forgot the password?</a>
