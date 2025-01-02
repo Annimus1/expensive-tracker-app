@@ -1,12 +1,8 @@
-import { Link } from "react-router";
 
 function App() {
-
   return (
-   <div>
-    <Link to="/signin">Log in</Link>
-    <Link to="/signup">Register</Link>
-
+   <div>    
+      Home
    </div>
   );
 }
@@ -23,6 +19,8 @@ function App() {
 
   usuario: 
     nombre
+    email
+    password
     numero_telefonico
     cuenta
 
