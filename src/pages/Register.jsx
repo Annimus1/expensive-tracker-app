@@ -15,36 +15,33 @@ function Register() {
     const { _, toggleAuth } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (passwd === passwd2 && passwd.length > 4) {
             setPasswdError(false);
-            let id = createUser(email, passwd);
-
-            if (id != null) {
-                localStorage.setItem("id", id);
+            
+            createUser(email, passwd)
+            .then( id =>{
                 toggleAuth(id);
                 navigate("/");
-            }
+            }).catch( error => {
+                if (!passwd.length < 4) {
+                    alert("Password must be bigger than 4 characters")
+                }else{
+                    console.error(error);
+                }
+                setPasswdError(true);
+            });
 
-        } else {
-            if (!passwd.length < 4) {
-                alert("Password must be bigger than 4 characters")
-            }
-            setPasswdError(true);
         }
     }
 
-    const handleGoogleBtn = () => {
-        let id = SignInWithGoogle();
-
-        if (id != null) {
-            localStorage.setItem("id", id);
-            toggleAuth(id);
-            navigate("/");
-        }
-
+    const handleGoogleBtn = async () => {
+        const id = await SignInWithGoogle();
+        toggleAuth(id);
+        navigate("/")
+        
     }
 
     return (
@@ -132,4 +129,4 @@ function Register() {
     );
 }
 
-export default Register
+export default Register;

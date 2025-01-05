@@ -23,12 +23,17 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 
-async function createUser(email, password, displayName, phoneNumber){
+async function createUser(email: string, password: string, displayName: string, phoneNumber: number): Promise<string>
+{
+  let result;
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     await updateProfile(auth.currentUser, { displayName: displayName , phoneNumber: phoneNumber});
-    return await user.uid;
+    
+    console.log(user.uid);
+    result = user.uid;
+  
   } catch (error) {
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -37,19 +42,22 @@ async function createUser(email, password, displayName, phoneNumber){
     } else {
       // console.error(error);
     }
+    result = null;
+  }
 
-    return null;
+  finally{
+    return result;
   }
 }
 
-async function SignInWithGoogle(){
-  signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const user = result.user;
+async function SignInWithGoogle(): Promise<string> {
+  let res
+  await signInWithPopup(auth, provider)
+  .then( async (result) => {
+    const user = await result.user;
 
-    return user.uid
+    console.log("return: ", user.uid);
+    res = user.uid;
 
   }).catch((error) => {
     // Handle Errors here.
@@ -59,8 +67,10 @@ async function SignInWithGoogle(){
     const email = error.customData.email;
     // The AuthCredential type that was used.
     const credential = GoogleAuthProvider.credentialFromError(error);
-    return null;
+    res = null;
   });
+
+  return res;
 }
 
 export {app, createUser, SignInWithGoogle};
