@@ -1,9 +1,23 @@
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import {AuthContext} from '../Auth/AuthContext';
 
 function App() {
+  const { isAuth, toggleAuth } = useContext(AuthContext);
+  const nav = useNavigate();
+
+  useEffect(()=>{      
+    if (!isAuth && localStorage.getItem("uid") != null) {
+      let id =  localStorage.getItem("uid");
+      id ? toggleAuth(id): null;     
+    }else{
+      isAuth? nav("/transactions"):nav("/signin")
+    }
+  },[isAuth]);
+  
+  
   return (
-   <div>    
-      Home
-   </div>
+   <></>
   );
 }
 
