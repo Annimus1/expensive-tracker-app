@@ -21,15 +21,24 @@ function Register() {
         if (passwd === passwd2 && passwd.length > 4) {
             setPasswdError(false);
             
-            createUser(email, passwd)
+            createUser(email, passwd, name, phone)
             .then( id =>{
+
+                // error 400 email already exists
+                if(id == "400"){
+                    alert("Email already exists");
+                    throw new Error("Email already exists");
+                }
+    
+                // 200 ok
                 toggleAuth(id);
                 navigate("/");
+            
             }).catch( error => {
-                if (!passwd.length < 4) {
+                if (passwd.length < 4) {
                     alert("Password must be bigger than 4 characters")
                 }else{
-                    console.error(error);
+                    console.error("error");
                 }
                 setPasswdError(true);
             });

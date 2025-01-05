@@ -7,11 +7,11 @@ function App() {
   const nav = useNavigate();
 
   useEffect(()=>{      
+    let id =  localStorage.getItem("uid");
     if (!isAuth && localStorage.getItem("uid") != null) {
-      let id =  localStorage.getItem("uid");
       id ? toggleAuth(id): null;     
     }else{
-      isAuth? nav("/transactions"):nav("/signin")
+      isAuth? nav(`/${id}/transactions`):nav("/signin")
     }
   },[isAuth]);
   

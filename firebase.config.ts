@@ -42,7 +42,7 @@ async function createUser(email: string, password: string, displayName: string, 
     } else {
       // console.error(error);
     }
-    result = null;
+    result = "400";
   }
 
   finally{
