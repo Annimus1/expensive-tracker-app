@@ -1,7 +1,14 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp  } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword,  updateProfile, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
-import { useContext } from "react";
+import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword
+} from "firebase/auth";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,8 +30,7 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 
-async function createUser(email: string, password: string, displayName: string, phoneNumber: number)
-{
+async function createUser(email: string, password: string, displayName: string, phoneNumber: number) {
   let result;
 
   try {
@@ -34,7 +40,7 @@ async function createUser(email: string, password: string, displayName: string, 
 
     console.log(user);
     result = user;
-  
+
   } catch (error) {
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -46,30 +52,47 @@ async function createUser(email: string, password: string, displayName: string, 
     result = "400";
   }
 
-  finally{
+  finally {
     return result;
   }
 }
 
-async function SignInWithGoogle(){
+async function SignInWithGoogle() {
   let res
   await signInWithPopup(auth, provider)
-  .then( async (result) => {
-    const user = await result.user;
-    res = user;
+    .then(async (result) => {
+      const user = await result.user;
+      res = user;
 
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    res = null;
-  });
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      res = null;
+    });
 
   return res;
 }
 
-export {app, createUser, SignInWithGoogle};
+async function SignIn(email: string, password: string) {
+
+  try {
+
+    const userCredential = await signInWithEmailAndPassword(auth, email, password)
+    const user = userCredential.user;
+    return user;
+
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+    return null;
+  }
+
+}
+
+export { app, createUser, SignInWithGoogle, SignIn };
