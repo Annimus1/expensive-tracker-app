@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.cardShadow{
+    box-shadow: 0 100px 0 20px rgb(241, 245, 249);
+}
+
+@media  (min-width: 768px) {
+    .cardShadow{
+        box-shadow: 0 0 0 0 rgb(241, 245, 249); 
+    }
+  }
