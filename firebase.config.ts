@@ -23,16 +23,17 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 
-async function createUser(email: string, password: string, displayName: string, phoneNumber: number): Promise<string>
+async function createUser(email: string, password: string, displayName: string, phoneNumber: number)
 {
   let result;
+
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    await updateProfile(auth.currentUser, { displayName: displayName , phoneNumber: phoneNumber});
-    
-    console.log(user.uid);
-    result = user.uid;
+    await updateProfile(auth.currentUser, { displayName: displayName });
+
+    console.log(user);
+    result = user;
   
   } catch (error) {
     var errorCode = error.code;
@@ -50,14 +51,12 @@ async function createUser(email: string, password: string, displayName: string, 
   }
 }
 
-async function SignInWithGoogle(): Promise<string> {
+async function SignInWithGoogle(){
   let res
   await signInWithPopup(auth, provider)
   .then( async (result) => {
     const user = await result.user;
-
-    console.log("return: ", user.uid);
-    res = user.uid;
+    res = user;
 
   }).catch((error) => {
     // Handle Errors here.

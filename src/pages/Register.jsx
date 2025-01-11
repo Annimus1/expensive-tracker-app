@@ -22,16 +22,16 @@ function Register() {
             setPasswdError(false);
             
             createUser(email, passwd, name, phone)
-            .then( id =>{
+            .then( user =>{
 
                 // error 400 email already exists
-                if(id == "400"){
+                if(user == "400"){
                     alert("Email already exists");
                     throw new Error("Email already exists");
                 }
     
                 // 200 ok
-                toggleAuth(id);
+                toggleAuth(user);
                 navigate("/");
             
             }).catch( error => {
@@ -47,9 +47,14 @@ function Register() {
     }
 
     const handleGoogleBtn = async () => {
-        const id = await SignInWithGoogle();
-        toggleAuth(id);
-        navigate("/")
+        try{
+            const  user = await SignInWithGoogle();
+            toggleAuth(user);
+            navigate("/")
+
+        }catch (error){
+            console.error(error)
+        }
         
     }
 
