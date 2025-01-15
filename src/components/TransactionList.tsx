@@ -1,7 +1,12 @@
 import React from "react";
 import Transaction from "./Transaction";
+import AddTransaction from "./AddTransaction";
 
 function TransactionList() {
+  let date = new Date();
+  const [year, setYear] = React.useState(date.getFullYear());
+  const [transactions, setTransactions] = React.useState([])
+
   return (
     <main className="bg-slate-100 mt-5 h-[59vh] px-5 pb-28
       md:mx-52 md:rounded-md md:h-[72vh] md:overflow-y-hidden
@@ -13,34 +18,39 @@ function TransactionList() {
       </div>
 
       {/* filters */}
-      <div className=" flex justify-between my-2">
-        <span className="border border-slate-300 rounded-full p-2">Sat Jan 11</span>
-        <span className="border border-slate-300 rounded-full p-2">2025</span>
+      <div className=" flex justify-between my-2 gap-2">
+        <div className="flex gap-5 md:gap-8">
+          <select className="border border-slate-300 rounded-full p-2 bg-slate-100 pr-5">
+            <option>Daily</option>
+            <option>Weekly</option>
+            <option>Monthly</option>
+          </select>
+
+          <input
+            className="border border-slate-300 rounded-full p-2 bg-slate-100 pl-5"
+            type="number"
+            min="1900"
+            max="2099"
+            step="1"
+            value={year}
+            onChange={(text) => setYear(Number.parseInt(text.target.value))}
+          />
+        </div>
+
+        <AddTransaction />
       </div>
 
       {/* list of Trnasactions */}
       <ul className="mt-2 flex flex-col gap-2 max-h-full overflow-y-scroll h-full">
-        
-        <Transaction title={"Transaction"}/>
-        <Transaction title={"Transaction 2"}/>
-        <Transaction title={"Transaction 3"}/>
-        <Transaction title={"Transaction 4"}/>
-        <Transaction title={"Transaction 5"}/>
-        <Transaction title={"Transaction 6"}/>
-        <Transaction title={"Transaction 7"}/>
-        <Transaction title={"Transaction 8"}/>
-        <Transaction title={"Transaction 9"}/>
-        <Transaction title={"Transaction 0"}/>
-        <Transaction title={"Transaction 1"}/>
-        <Transaction title={"Transaction 2"}/>
-        <Transaction title={"Transaction 3"}/>
-        <Transaction title={"Transaction 4"}/>
-        <Transaction title={"Transaction 5"}/>
-        <Transaction title={"Transaction 6"}/>
-        <Transaction title={"Transaction 7"}/>
-        <Transaction title={"Transaction 8"}/>
-        <Transaction title={"Transaction 9"}/>
-        <Transaction title={"Transaction 0"}/>
+
+        {
+          transactions.length > 0 ? 
+            transactions.map((text, index) => <Transaction key={index} title={text} />) :
+            <div className="w-full h-full flex justify-center items-center">
+              <p className="text-md font-semibold text-gray-500">No Transactions have been done yet.</p>
+            </div>
+        }
+
       </ul>
 
     </main>

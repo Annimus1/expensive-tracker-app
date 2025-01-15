@@ -95,4 +95,11 @@ async function SignIn(email: string, password: string) {
 
 }
 
-export { app, createUser, SignInWithGoogle, SignIn };
+async function createTransaction({type, account, method, date, category, desc, amount}:
+  {type:string, account:string, method:string, date:any, category:string, desc:string, amount:number}){
+
+    console.log({type, account, method, date, category, desc, amount});
+    
+}
+
+export { app, createUser, SignInWithGoogle, SignIn, createTransaction };

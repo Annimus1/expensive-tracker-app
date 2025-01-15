@@ -4,14 +4,16 @@ const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   const [isAuth, setisAuth] = useState(false);
+  const [user, setUser] = useState(null);
   
-  const toggleAuth = (user) => {
-    localStorage.setItem("user", JSON.stringify(user));
+  const toggleAuth = (userF) => {
+    localStorage.setItem("user", JSON.stringify(userF));
     setisAuth(true);
+    setUser(userF)
   };
   
   return (
-    <AuthContext.Provider value={{ isAuth, toggleAuth }}>
+    <AuthContext.Provider value={{ isAuth, toggleAuth, user }}>
       {children}
     </AuthContext.Provider>
   );
